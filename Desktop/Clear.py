@@ -70,7 +70,8 @@ if __name__ == '__main__':
                                                                                 print(checkfile)
                                                                                 if not os.path.exists(checkfile):
                                                                                         break
-                                                                        os.rename(file, chgfile)
+                                                                        os.rename(dir + "\\" + file, dir + "\\" + chgfile)
+                                                                        print(file)
                                                                         src = dir + "\\" + chgfile
                                                                         stat = shutil.move(src, target)
                                                                         print("pa")
