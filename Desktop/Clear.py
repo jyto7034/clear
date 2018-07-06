@@ -69,15 +69,26 @@ if __name__ == '__main__':
                                                                                 checkfile = target + "\\" + chgfile
                                                                                 print(checkfile)
                                                                                 if not os.path.exists(checkfile):
+                                                                                        print("pa")
                                                                                         break
                                                                         os.rename(dir + "\\" + file, dir + "\\" + chgfile)
                                                                         print(file)
                                                                         src = dir + "\\" + chgfile
                                                                         stat = shutil.move(src, target)
-                                                                        print("pa")
                                                         except Exception as e:
-                                                                print(e)
+                                                                print("Dsf" + e)
                                                                 pass
+
+                                                        for tfile in os.listdir(target):
+                                                                if "(" in tfile and ")" in tfile:
+                                                                        print("sad")
+                                                                        dscfile = os.stat(target + "\\" + tfile).st_size
+                                                                        srcfile = os.stat(checkfile).st_size
+                                                                        if dscfile == srcfile:
+                                                                                # os.remove(dsc)
+                                                                                # shutil.move(src, dsc)
+                                                                                # scount += 1
+                                                                                print("sad")
                         else:
                                 print("No exist folder")
         print("Success : %d   :   Failed : %d" % (scount, fcount))
