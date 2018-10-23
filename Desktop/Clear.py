@@ -2,10 +2,6 @@ import os
 import shutil
 import re
 
-#
-# Must make backup func!!!
-#
-
 
 if __name__ == '__main__':
         delay = 0
@@ -22,7 +18,7 @@ if __name__ == '__main__':
         else:
                 fpaths = setfile.read().split()
                 for strs in fpaths:
-                        if "Target:" in strs:
+                        if "MoveTo:" in strs:
                                 target = strs[7:]
                                 temp = strs
                                 del fpaths[fpaths.index(temp)]
@@ -56,39 +52,48 @@ if __name__ == '__main__':
                                                         dscfilesize = os.stat(dsc).st_size
                                                         try:
                                                                 if dscfilesize == srcfilesize:
+                                                                        print(dsc, " and ", src, " is same")
                                                                         os.remove(dsc)
                                                                         shutil.move(src, dsc)
                                                                         scount += 1
                                                                 else:
                                                                         while True:
                                                                                 filenamecount += 1
-                                                                                chgfile = file[
-                                                                                          :file.__len__() - 4] + "(" + str(
-                                                                                        filenamecount) + ")" + file[
-                                                                                                               file.__len__() - 4:]
+                                                                                chgfile = file[ :file.__len__() - 4] + "(" +     str(filenamecount)     + ")" + file[file.__len__() - 4:]
                                                                                 checkfile = target + "\\" + chgfile
-                                                                                print(checkfile)
+                                                                                # print("check :", checkfile)
+                                                                                # print(src, dsc)
+                                                                                if os.path.exists(checkfile):
+                                                                                        srcfilesize = os.stat(src).st_size
+                                                                                        checkfilesize = os.stat(checkfile).st_size
+                                                                                        print(checkfile ,src)
+
+                                                                                        if srcfilesize == checkfilesize:
+                                                                                                os.remove(checkfile)
+
                                                                                 if not os.path.exists(checkfile):
-                                                                                        print("pa")
+                                                                                        print("Last Count")
                                                                                         break
+
                                                                         os.rename(dir + "\\" + file, dir + "\\" + chgfile)
                                                                         print(file)
                                                                         src = dir + "\\" + chgfile
                                                                         stat = shutil.move(src, target)
+                                                                        scount += 1
                                                         except Exception as e:
-                                                                print("Dsf" + e)
+                                                                print("Exception" + e)
                                                                 pass
 
-                                                        for tfile in os.listdir(target):
-                                                                if "(" in tfile and ")" in tfile:
-                                                                        print("sad")
-                                                                        dscfile = os.stat(target + "\\" + tfile).st_size
-                                                                        srcfile = os.stat(checkfile).st_size
-                                                                        if dscfile == srcfile:
-                                                                                # os.remove(dsc)
-                                                                                # shutil.move(src, dsc)
-                                                                                # scount += 1
-                                                                                print("sad")
+                                                        # for tfile in os.listdir(target):
+                                                        #         if "(" in tfile and ")" in tfile:
+                                                        #                 print("sad")
+                                                        #                 dscfile = os.stat(target + "\\" + tfile).st_size
+                                                        #                 srcfile = os.stat(checkfile).st_size
+                                                        #                 if dscfile == srcfile:
+                                                        #                         os.remove(dsc)
+                                                        #                         shutil.move(src, dsc)
+                                                        #                         scount += 1
+                                                        #                         print("sadd")
                         else:
                                 print("No exist folder")
         print("Success : %d   :   Failed : %d" % (scount, fcount))
