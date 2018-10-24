@@ -14,11 +14,14 @@ import sys
 import win32api
 import win32con
 import win32gui_struct
+# import ctypes
 
 try:
         import winxpgui as win32gui
 except ImportError:
         import win32gui
+
+
 
 
 class SysTrayIcon(object):
@@ -224,22 +227,25 @@ def non_string_iterable(obj):
 
 if __name__ == '__main__':
         import itertools, glob
+        from Clear import Run
 
         icons = itertools.cycle(glob.glob('*.ico'))
-        hover_text = "SysTrayIcon.py Demo"
+        hover_text = "File Manager"
 
 
-        def OnCreate(sysTrayIcon): print ("Hello World.")
+        def OnCreate(sysTrayIcon):
+            Run()
+
+        # 요건 이쪽 트레이에 커스텀으로 프로그램 띄우는거
+        #
+
+        def Settings(sysTrayIcon):
+            os.system("C:\Settings\Settings.txt")
+
+        menu_options = (('Menu', next(icons), OnCreate), ('Settings', next(icons), Settings))
 
 
-        def test(sysTrayIcon): print ("Hello Simon.")
-
-
-
-        menu_options = (('Menu', next(icons), OnCreate), ('Test', next(icons), test))
-
-
-        def Terminated(sysTrayIcon): print ('Bye, then.')
+        def Terminated(sysTrayIcon): print ('Shutdown.')
 
 
         SysTrayIcon(next(icons), hover_text, menu_options, on_quit=Terminated, default_menu_index=1)
